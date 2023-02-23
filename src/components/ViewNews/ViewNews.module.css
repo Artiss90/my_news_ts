@@ -1,1 +1,5 @@
-.container{}
+.container {
+  text-align: center;
+  padding-left: 2vw;
+  padding-right: 2vw;
+}

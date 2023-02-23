@@ -1,6 +1,6 @@
+import * as React from 'react';
 import Header from 'components/Header/Header';
 import ViewNews from 'components/ViewNews/ViewNews';
-import * as React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import ProtectedRoute from 'routes/ProtectedRoute';
 import SignIn from './components/SignIn/SignIn';
