@@ -59,18 +59,18 @@ const KEY = process.env.REACT_APP_API_NEWS;
 
 function ViewNews() {
   // const [listArticles, setListArticles] = React.useState<[] | News[]>([]);
-  // const [page, setPage] = React.useState(1);
+  const [page, setPage] = React.useState(1);
   const listNews = useAppSelector((state) => state.news.articles);
   const dispatch = useAppDispatch();
   React.useEffect(() => {
-    fetch(`https://newsapi.org/v2/top-headlines?country=ua&pageSize=5&page=1&apiKey=${KEY}`)
+    fetch(`https://newsapi.org/v2/top-headlines?country=ua&pageSize=5&page=${page}&apiKey=${KEY}`)
       .then((response) => {
         return response.json();
       })
       .then((data) => {
         dispatch(addNews(data.articles));
       });
-  }, [dispatch]);
+  }, [dispatch, page]);
 
   return (
     <div className={style.container}>
@@ -82,7 +82,7 @@ function ViewNews() {
           </li>
         ))}
       </ul>
-      <Button variant="contained" onClick={() => dispatch(addNews(fakeNews))}>
+      <Button variant="contained" onClick={() => setPage(page + 1)}>
         Завантажити ще
       </Button>
     </div>
