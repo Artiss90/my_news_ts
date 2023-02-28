@@ -16,7 +16,7 @@ export type News = {
 
 
 type NewsState = {
-  articles: News[];
+  articles: News[] | [];
 }
 
 const initialState: NewsState = {

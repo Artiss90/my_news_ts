@@ -1,5 +1,8 @@
-import { News } from 'redux/news/newsSlice';
+import * as React from 'react';
+import { useAppDispatch, useAppSelector } from 'hooks';
+import { addNews, News } from 'redux/news/newsSlice';
 import CartNews from './CartNews/CartNews';
+import Button from '@mui/material/Button';
 import style from './ViewNews.module.css';
 
 const fakeNews = [
@@ -52,17 +55,36 @@ const fakeNews = [
   },
 ];
 
+const KEY = process.env.REACT_APP_API_NEWS;
+
 function ViewNews() {
+  // const [listArticles, setListArticles] = React.useState<[] | News[]>([]);
+  // const [page, setPage] = React.useState(1);
+  const listNews = useAppSelector((state) => state.news.articles);
+  const dispatch = useAppDispatch();
+  React.useEffect(() => {
+    fetch(`https://newsapi.org/v2/top-headlines?country=ua&pageSize=5&page=1&apiKey=${KEY}`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        dispatch(addNews(data.articles));
+      });
+  }, [dispatch]);
+
   return (
     <div className={style.container}>
       <h1>News</h1>
       <ul>
-        {fakeNews.map((article) => (
+        {listNews.map((article) => (
           <li key={article.url}>
             <CartNews article={article} />
           </li>
         ))}
       </ul>
+      <Button variant="contained" onClick={() => dispatch(addNews(fakeNews))}>
+        Завантажити ще
+      </Button>
     </div>
   );
 }
